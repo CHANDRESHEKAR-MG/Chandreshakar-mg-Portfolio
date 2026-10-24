@@ -1,0 +1,516 @@
+body {
+  background: #fff;
+  color: #40514d;
+}
+
+body .site-header {
+  border-color: #e7eeec;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 2px 10px rgba(28, 55, 50, 0.035);
+}
+
+body .wordmark {
+  color: #168c80;
+}
+
+body .primary-navigation > a {
+  color: #52615f;
+}
+
+body .primary-navigation > a:hover {
+  color: #128e80;
+}
+
+body .primary-navigation .nav-resume {
+  border-color: #158e80;
+  color: #127d72;
+}
+
+body .primary-navigation .nav-resume:hover {
+  background: #eff9f7;
+}
+
+body .menu-toggle {
+  color: #28524d;
+}
+
+body .availability {
+  border-color: #dceee9;
+  background: #f4fbf9;
+  color: #35766e;
+}
+
+body .hero h1,
+body .hero-headline,
+body .hero-aside-title,
+body .section-heading h2,
+body .contact-copy h2 {
+  color: #273a36;
+}
+
+body .hero-role,
+body .hero-headline span,
+body .section-heading h2 span,
+body .contact-copy h2 span {
+  color: #148c7e;
+}
+
+body .hero-intro,
+body .hero-description,
+body .hero-learning,
+body .hero-aside-copy,
+body .section-heading > p,
+body .about-main,
+body .project-detail p,
+body .contact-copy > p {
+  color: #687572;
+}
+
+body .hero-learning strong,
+body .about-lead {
+  color: #354743;
+}
+
+body .hero-aside,
+body .about-aside,
+body .skill-card,
+body .education-card,
+body .project-card,
+body .profile-link-card,
+body .resume-card {
+  border-color: #e4ece9;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(35, 75, 67, 0.045);
+}
+
+body .hero-aside-status,
+body .hero-socials,
+body .social-icon-link,
+body .about-aside h3,
+body .focus-item p,
+body .skill-card h3,
+body .education-card h3,
+body .education-subject,
+body .education-institution,
+body .project-card h3,
+body .profile-name {
+  color: #40514d;
+}
+
+body .hero-aside-rule,
+body .focus-item,
+body .contact-side,
+body .contact-social-link,
+body .footer-bottom {
+  border-color: #e2eae7;
+}
+
+body .hero-aside-rule {
+  background: #e9efed;
+}
+
+body .social-icon-link {
+  border-color: #e2e9e7;
+  background: #fff;
+  color: #4a625d;
+}
+
+body .social-icon-link:hover {
+  border-color: #9acdc4;
+  background: #eff9f7;
+  color: #138d80;
+}
+
+body .section-heading h2::after {
+  background: #38a99a;
+}
+
+body .eyebrow {
+  color: #368d82;
+}
+
+body .eyebrow-index,
+body .skill-number,
+body .education-state,
+body .education-location,
+body .project-detail > span,
+body .project-contribution,
+body .profile-handle,
+body .profile-description,
+body .profile-note {
+  color: #788480;
+}
+
+body .about-section,
+body .skills-section,
+body .education-section,
+body .projects-section,
+body .profiles-section,
+body .resume-section,
+body .contact-section {
+  border-color: #e5ecea;
+}
+
+body .focus-item {
+  border-color: #edf1f0;
+}
+
+body .focus-item > span,
+body .education-index,
+body .project-index {
+  color: #5ba99e;
+}
+
+body .skill-count {
+  color: #748680;
+}
+
+body .skill-tag,
+body .project-tags > span {
+  border-color: #e3ebe8;
+  background: #f8faf9;
+  color: #43534f;
+}
+
+body .skill-tag:hover {
+  border-color: #b6d9d2;
+  background: #f2f9f7;
+}
+
+body .skill-mark {
+  border-color: #d5e9e4;
+  background: #edf7f4;
+  color: #218a7d;
+}
+
+body .skill-tag.is-learning {
+  border-color: #efe2c9;
+  background: #fffbf2;
+  color: #8b6b34;
+}
+
+body .skill-tag.is-learning .skill-mark {
+  border-color: #f0dfbd;
+  background: #fff5e4;
+  color: #9a7434;
+}
+
+body .legend-used {
+  background: #208f82;
+}
+
+body .legend-learning {
+  border-color: #d89c46;
+  background: #fff8ea;
+}
+
+body .education-card.education-current {
+  border-top-color: #299a8c;
+}
+
+body .education-state,
+body .education-details,
+body .project-category,
+body .note-label {
+  color: #368d82;
+}
+
+body .education-subject {
+  color: #465b55;
+}
+
+body .education-location,
+body .project-status,
+body .project-contribution strong,
+body .project-link-unavailable {
+  color: #788480;
+}
+
+body .project-status i {
+  background: #d5a44f;
+}
+
+body .project-link {
+  color: #188d80;
+}
+
+body .profile-mark {
+  border-color: #cfe6e0;
+  background: #f0f8f6;
+  color: #188f81;
+}
+
+body .profile-link-card > svg {
+  color: #83908c;
+}
+
+body .profile-link-card:hover > svg {
+  color: #168f82;
+}
+
+body .resume-preview {
+  border-color: #e3ece9;
+  background: #f2f6f5;
+}
+
+body .resume-content h3 {
+  color: #30443f;
+}
+
+body .resume-content > p {
+  color: #707c78;
+}
+
+body .button-secondary {
+  border-color: #cbd9d6;
+  background: #fff;
+  color: #345650;
+}
+
+body .button-secondary:hover {
+  border-color: #159987;
+  background: #f4fbf9;
+}
+
+body .contact-panel {
+  border-color: #dcebe7;
+  background: #fff;
+}
+
+body .contact-copy h2 {
+  margin-top: 11px;
+  font-size: clamp(29px, 3.7vw, 39px);
+  text-align: center;
+}
+
+body .contact-copy > .eyebrow {
+  display: flex;
+  justify-content: center;
+}
+
+body .contact-copy h2::after {
+  display: block;
+  width: 46px;
+  height: 3px;
+  margin: 12px auto 0;
+  border-radius: 3px;
+  background: #38a99a;
+  content: '';
+}
+
+body .contact-copy > p {
+  max-width: 450px;
+  margin: 12px 0 23px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+body .contact-details {
+  display: grid;
+  gap: 20px;
+}
+
+body .contact-detail {
+  display: grid;
+  grid-template-columns: 24px 1fr 16px;
+  align-items: center;
+  gap: 12px;
+  color: #455b55;
+}
+
+body .contact-detail > div {
+  display: grid;
+  gap: 4px;
+}
+
+body .contact-detail strong {
+  color: #344742;
+  font-size: 14px;
+}
+
+body .contact-detail > div > span {
+  color: #536863;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+body .contact-detail > svg,
+body .contact-detail-icon {
+  color: #55aaa0;
+}
+
+body a.contact-detail:hover strong,
+body a.contact-detail:hover > div > span {
+  color: #168d80;
+}
+
+body .contact-side {
+  border: 0;
+}
+
+body .contact-form {
+  display: grid;
+  gap: 9px;
+  padding: 28px 30px;
+  border: 1px solid #e7eeec;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(35, 75, 67, 0.12);
+}
+
+body .contact-form label {
+  margin-top: 7px;
+  color: #40514d;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+body .contact-form input,
+body .contact-form textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 11px;
+  border: 1px solid #dce5e9;
+  border-radius: 5px;
+  outline: none;
+  background: #fff;
+  color: #344742;
+  font: inherit;
+  font-size: 13px;
+}
+
+body .contact-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+body .contact-form input:focus,
+body .contact-form textarea:focus {
+  border-color: #58aaa0;
+  box-shadow: 0 0 0 2px rgba(58, 169, 154, 0.12);
+}
+
+body .message-submit {
+  justify-self: start;
+  min-width: 146px;
+  margin-top: 13px;
+  cursor: pointer;
+}
+
+body .contact-form-note {
+  color: #75817e;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+body .site-footer {
+  border-top: 0;
+  background: #0a1b19;
+  color: #f2f7f5;
+}
+
+body .footer-main {
+  display: flex;
+  min-height: 248px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 22px;
+  text-align: center;
+}
+
+body .footer-brand > .wordmark {
+  color: #f5f7f6;
+  font-size: 25px;
+  letter-spacing: -0.025em;
+}
+
+body .footer-brand > p {
+  margin-top: 13px;
+  color: #e0e9e6;
+  font-size: 14px;
+}
+
+body .footer-nav {
+  justify-content: center;
+  gap: 27px;
+}
+
+body .footer-nav a {
+  color: #e1eae7;
+  font-size: 13px;
+}
+
+body .footer-nav a:hover,
+body .footer-bottom a:hover {
+  color: #72cabb;
+}
+
+body .footer-socials {
+  display: flex;
+  grid-column: auto;
+  justify-content: center;
+  gap: 19px;
+}
+
+body .footer-socials > a {
+  width: auto;
+  height: auto;
+  border: 0;
+  background: transparent;
+  color: #f3f8f6;
+}
+
+body .footer-socials > a:hover {
+  border: 0;
+  color: #79d3c4;
+}
+
+body .footer-bottom {
+  min-height: 54px;
+  justify-content: center;
+  border-color: rgba(255, 255, 255, 0.11);
+  color: #8c9f9a;
+  font-size: 13px;
+  text-align: center;
+}
+
+body .skip-link {
+  background: #fff;
+  color: #123b38;
+}
+
+@media (max-width: 760px) {
+  body .primary-navigation {
+    border-color: #e4ece9;
+    background: #fff;
+    box-shadow: 0 12px 20px rgba(31, 61, 55, 0.1);
+  }
+
+  body .primary-navigation > a,
+  body .primary-navigation > a:not(.nav-resume) {
+    border-color: #edf1f0;
+    color: #52615f;
+  }
+
+  body .primary-navigation > a:hover {
+    color: #128e80;
+  }
+
+  body .contact-panel {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  body .contact-form {
+    padding: 22px;
+  }
+
+  body .footer-main {
+    min-height: 250px;
+  }
+
+  body .footer-nav {
+    gap: 13px 20px;
+  }
+}
