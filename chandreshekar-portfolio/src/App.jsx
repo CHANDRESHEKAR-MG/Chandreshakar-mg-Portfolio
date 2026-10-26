@@ -29,6 +29,7 @@ const skillMarks = {
   'VS Code': 'VS',
   Maven: 'Mv',
   'Data Structures & Algorithms': 'DSA',
+  Python: 'Py',
   'Machine Learning': 'ML',
   'Deep Learning': 'DL',
   'Generative AI': 'AI',
@@ -162,6 +163,67 @@ function ExternalLink({ href, children, className = '', label }) {
   )
 }
 
+function ProjectCard({ project }) {
+  return (
+    <article className="project-card" data-reveal>
+      <div className="project-card-top">
+        <span className="project-index">{project.number}</span>
+        <span className={`project-status${project.planned ? ' is-planned' : ''}`}>
+          <i />{project.planned ? 'PLANNED' : 'PROJECT'}
+        </span>
+      </div>
+      <p className="project-category">{project.category}</p>
+      <h3>{project.name}</h3>
+      {project.planned ? (
+        <div className="project-detail">
+          <span>PLANNED IDEA</span>
+          <p>{project.problem}</p>
+        </div>
+      ) : (
+        <>
+          <div className="project-detail">
+            <span>OVERVIEW</span>
+            <p>{project.description}</p>
+          </div>
+          {project.problem && (
+            <div className="project-detail">
+              <span>CHALLENGE</span>
+              <p>{project.problem}</p>
+            </div>
+          )}
+        </>
+      )}
+      <div className="project-tags">
+        {project.technologies.map((technology) => (
+          <span key={technology}>{technology}</span>
+        ))}
+      </div>
+      {(project.repository || project.demo) && (
+        <div className="project-actions">
+          {project.repository && (
+            <ExternalLink
+              className="project-link"
+              href={project.repository}
+              label={`${project.name} repository (opens in a new tab)`}
+            >
+              GitHub <Icon name="arrow" size={14} />
+            </ExternalLink>
+          )}
+          {project.demo && (
+            <ExternalLink
+              className="project-link"
+              href={project.demo}
+              label={`${project.name} live demo (opens in a new tab)`}
+            >
+              Live demo <Icon name="arrow" size={14} />
+            </ExternalLink>
+          )}
+        </div>
+      )}
+    </article>
+  )
+}
+
 function getInitialTheme() {
   try {
     const savedTheme = window.localStorage.getItem('portfolio-theme')
@@ -184,6 +246,7 @@ function App() {
     subject: '',
     message: '',
   })
+  const [contactErrors, setContactErrors] = useState({})
 
   useLayoutEffect(() => {
     document.body.dataset.theme = theme
@@ -222,6 +285,56 @@ function App() {
     targets.forEach((target) => observer.observe(target))
     return () => observer.disconnect()
   }, [])
+
+  useEffect(() => {
+    if (!menuOpen) return undefined
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [menuOpen])
+
+  const updateContactField = (field, value) => {
+    setContactForm((currentForm) => ({ ...currentForm, [field]: value }))
+    setContactErrors((currentErrors) => ({ ...currentErrors, [field]: '' }))
+  }
+
+  const handleContactSubmit = (event) => {
+    event.preventDefault()
+
+    const values = Object.fromEntries(
+      Object.entries(contactForm).map(([field, value]) => [field, value.trim()]),
+    )
+    const errors = {}
+
+    for (const field of ['name', 'email', 'subject', 'message']) {
+      if (!values[field]) errors[field] = 'This field is required.'
+    }
+
+    if (
+      values.email &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)
+    ) {
+      errors.email = 'Enter a valid email address.'
+    }
+
+    setContactErrors(errors)
+    if (Object.keys(errors).length > 0) return
+
+    const message = [
+      `Name: ${values.name}`,
+      `Email: ${values.email}`,
+      `Subject: ${values.subject}`,
+      '',
+      values.message,
+    ].join('\n')
+    const whatsappUrl = new URL(profile.whatsapp)
+    whatsappUrl.searchParams.set('text', message)
+    window.open(whatsappUrl.toString(), '_blank', 'noopener,noreferrer')
+  }
 
   const closeMenu = () => setMenuOpen(false)
 
@@ -279,17 +392,8 @@ function App() {
               Actively seeking SDE Intern / Software Engineer roles
             </p>
             <h1 id="hero-title">Hi, I&apos;m <span>Chandreshekar MG</span></h1>
-            <p className="hero-role">
-              Aspiring Software Engineer <span aria-hidden="true">|</span> Java
-              <span aria-hidden="true">|</span> Spring Boot
-              <span aria-hidden="true">|</span> MERN Stack
-              <span aria-hidden="true">|</span> DevOps
-            </p>
-            <p className="hero-description">
-              I enjoy building practical, scalable software applications that
-              solve real problems. I&apos;m growing my skills across full-stack
-              development, AI engineering, and cloud-native tools.
-            </p>
+            <p className="hero-role">{profile.headline}</p>
+            <p className="hero-description">{profile.introduction}</p>
             <div className="hero-actions">
               <a className="button button-primary" href="#projects">
                 Explore My Projects <Icon name="arrow-right" size={16} />
@@ -319,6 +423,8 @@ function App() {
                 className="profile-photo"
                 src="/images/profile.jpeg"
                 alt="Portrait of Chandreshekar M. G."
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
           </aside>
@@ -339,21 +445,20 @@ function App() {
                 Mechanical Engineering diploma.
               </p>
               <p>
-                That transition has shaped my curiosity about how systems work,
-                from physical mechanisms to software. I&apos;m building software
-                engineering fundamentals through Java and full-stack projects,
-                while exploring machine learning, Generative AI, DevOps, and
-                cloud technologies.
+                That transition reflects my strong interest in technology and
+                coding.
               </p>
               <p>
-                My goal is to grow as a software development engineer,
-                contributing to full-stack products while building deeper
-                capability in AI engineering and cloud-native delivery.
+                My engineering background encourages a systematic approach to
+                breaking down problems. I&apos;m developing software
+                engineering fundamentals through programming and projects,
+                focusing on full-stack development while learning about cloud
+                and DevOps.
               </p>
             </div>
             <aside className="about-aside" data-reveal>
               <h3>Areas I&apos;m focused on</h3>
-              {learningInterests.slice(0, 4).map((interest, index) => (
+              {learningInterests.map((interest, index) => (
                 <div className="focus-item" key={interest}>
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <p>{interest}</p>
@@ -369,11 +474,15 @@ function App() {
             index="02"
             eyebrow="Core skills"
             title={<>Tools I use and <span>am learning.</span></>}
-            description="A practical overview—without proficiency scores or inflated claims."
+            description="Java is my primary programming language. The labels below distinguish foundational knowledge, ongoing practice, learning, and areas of interest."
           />
           <div className="skills-legend" data-reveal>
-            <span><i className="legend-dot legend-used" /> Used in coursework or projects</span>
-            <span><i className="legend-dot legend-learning" /> Currently learning / exploring</span>
+            <span><i className="legend-dot legend-primary" /> Primary language</span>
+            <span><i className="legend-dot legend-basic" /> Basic knowledge</span>
+            <span><i className="legend-dot legend-project" /> Listed with portfolio projects</span>
+            <span><i className="legend-dot legend-practicing" /> Practicing</span>
+            <span><i className="legend-dot legend-learning" /> Currently learning</span>
+            <span><i className="legend-dot legend-interest" /> Areas of interest; experience not claimed</span>
           </div>
           <div className="skills-grid">
             {skillGroups.map((group) => (
@@ -388,9 +497,16 @@ function App() {
                 <div className="skill-tags">
                   {group.skills.map((skill) => (
                     <span
-                      className={`skill-tag${skill.learning ? ' is-learning' : ''}`}
+                      className={`skill-tag is-${skill.status}${skill.projectListed ? ' is-project-listed' : ''}`}
                       key={skill.name}
-                      title={skill.learning ? 'Currently learning or exploring' : 'Used in coursework or projects'}
+                      title={[
+                        skill.status === 'primary' && 'Primary programming language',
+                        skill.status === 'basic' && 'Basic knowledge',
+                        skill.status === 'practicing' && 'Basic knowledge; continuing to practice',
+                        skill.status === 'learning' && 'Currently learning',
+                        skill.status === 'interest' && 'Area of interest; proficiency or project experience is not claimed',
+                        skill.projectListed && 'Listed in a portfolio project description; not a proficiency claim',
+                      ].filter(Boolean).join('. ')}
                     >
                       <span className="skill-mark" aria-hidden="true">
                         {skillMarks[skill.name]}
@@ -439,56 +555,23 @@ function App() {
             index="04"
             eyebrow="Selected projects"
             title={<>Projects in <span>focus.</span></>}
-            description="Problem statements and technologies are based on the details currently available. Implementation specifics will be added as they are confirmed."
+            description="A selection of project work and one clearly labeled upcoming idea."
           />
           <div className="projects-grid">
-            {projects.map((project) => (
-              <article className="project-card" key={project.number} data-reveal>
-                <div className="project-card-top">
-                  <span className="project-index">{project.number}</span>
-                  <span className="project-status"><i />{project.status}</span>
-                </div>
-                <p className="project-category">{project.category}</p>
-                <h3>{project.name}</h3>
-                <div className="project-detail">
-                  <span>PROBLEM</span>
-                  <p>{project.problem}</p>
-                </div>
-                <div className="project-detail">
-                  <span>OVERVIEW</span>
-                  <p>{project.description}</p>
-                </div>
-                <p className="project-contribution">
-                  <strong>Contribution:</strong> {project.contribution}
-                </p>
-                <div className="project-tags">
-                  {project.technologies.map((technology) => (
-                    <span key={technology}>{technology}</span>
-                  ))}
-                </div>
-                <div className="project-actions">
-                  {project.repository ? (
-                    <ExternalLink
-                      className="project-link"
-                      href={project.repository}
-                      label={`${project.name} repository (opens in a new tab)`}
-                    >
-                      GitHub <Icon name="arrow" size={14} />
-                    </ExternalLink>
-                  ) : (
-                    <span className="project-link-unavailable">Repository link not provided</span>
-                  )}
-                  {project.demo ? (
-                    <ExternalLink className="project-link" href={project.demo}>
-                      Live demo <Icon name="arrow" size={14} />
-                    </ExternalLink>
-                  ) : (
-                    <span className="project-link-unavailable">No live demo</span>
-                  )}
-                </div>
-              </article>
+            {projects.filter((project) => !project.planned).map((project) => (
+              <ProjectCard key={project.number} project={project} />
             ))}
           </div>
+          {projects.some((project) => project.planned) && (
+            <div className="upcoming-projects">
+              <h3>Upcoming project</h3>
+              <div className="projects-grid">
+                {projects.filter((project) => project.planned).map((project) => (
+                  <ProjectCard key={project.number} project={project} />
+                ))}
+              </div>
+            </div>
+          )}
         </section>
 
         <section className="section-shell section-pad profiles-section" id="profiles">
@@ -534,7 +617,11 @@ function App() {
                 className="resume-embed"
                 src={profile.resumePdf}
                 title="Resume PDF preview"
+                loading="lazy"
               />
+              <p className="resume-fallback">
+                Preview not loading? <a href={profile.resumePdf} target="_blank" rel="noreferrer">Open the resume PDF</a>.
+              </p>
             </div>
             <div className="resume-content">
               <span className="note-label">CHANDRESHEKAR M. G.</span>
@@ -543,9 +630,25 @@ function App() {
                 My resume includes additional details about my education,
                 technical skills, and projects.
               </p>
-              <a className="button button-primary" href={profile.resumePdf} download>
-                <Icon name="download" size={16} /> Download resume
-              </a>
+              <div className="resume-actions">
+                <a
+                  className="button button-primary"
+                  href={profile.resumePdf}
+                  download="Chandreshekar-MG-Resume.pdf"
+                  aria-label="Download Chandreshekar M. G. resume PDF"
+                >
+                  <Icon name="download" size={16} /> Download resume
+                </a>
+                <a
+                  className="button button-secondary"
+                  href={profile.resumePdf}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open Chandreshekar M. G. resume in a new tab"
+                >
+                  Open in new tab <Icon name="arrow" size={15} />
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -600,19 +703,14 @@ function App() {
               <form
                 className="contact-form"
                 aria-describedby="contact-form-note"
-                onSubmit={(event) => {
-                  event.preventDefault()
-                  const text = [
-                    `Name: ${contactForm.name.trim()}`,
-                    `Email: ${contactForm.email.trim()}`,
-                    `Subject: ${contactForm.subject.trim()}`,
-                    '',
-                    contactForm.message.trim(),
-                  ].join('\n')
-                  const url = `${profile.whatsapp}?text=${encodeURIComponent(text)}`
-                  window.open(url, '_blank', 'noopener,noreferrer')
-                }}
+                noValidate
+                onSubmit={handleContactSubmit}
               >
+                {Object.keys(contactErrors).length > 0 && (
+                  <p className="contact-form-error-summary" role="alert">
+                    Please correct the highlighted fields before continuing.
+                  </p>
+                )}
                 <label htmlFor="contact-name">Full Name</label>
                 <input
                   id="contact-name"
@@ -620,9 +718,12 @@ function App() {
                   autoComplete="name"
                   placeholder="Your name"
                   required
+                  aria-invalid={Boolean(contactErrors.name)}
+                  aria-describedby={contactErrors.name ? 'contact-name-error' : undefined}
                   value={contactForm.name}
-                  onChange={(event) => setContactForm({ ...contactForm, name: event.target.value })}
+                  onChange={(event) => updateContactField('name', event.target.value)}
                 />
+                {contactErrors.name && <span className="field-error" id="contact-name-error">{contactErrors.name}</span>}
                 <label htmlFor="contact-email">Email Address</label>
                 <input
                   id="contact-email"
@@ -631,18 +732,24 @@ function App() {
                   autoComplete="email"
                   placeholder="you@example.com"
                   required
+                  aria-invalid={Boolean(contactErrors.email)}
+                  aria-describedby={contactErrors.email ? 'contact-email-error' : undefined}
                   value={contactForm.email}
-                  onChange={(event) => setContactForm({ ...contactForm, email: event.target.value })}
+                  onChange={(event) => updateContactField('email', event.target.value)}
                 />
+                {contactErrors.email && <span className="field-error" id="contact-email-error">{contactErrors.email}</span>}
                 <label htmlFor="contact-subject">Subject</label>
                 <input
                   id="contact-subject"
                   name="subject"
                   placeholder="What would you like to discuss?"
                   required
+                  aria-invalid={Boolean(contactErrors.subject)}
+                  aria-describedby={contactErrors.subject ? 'contact-subject-error' : undefined}
                   value={contactForm.subject}
-                  onChange={(event) => setContactForm({ ...contactForm, subject: event.target.value })}
+                  onChange={(event) => updateContactField('subject', event.target.value)}
                 />
+                {contactErrors.subject && <span className="field-error" id="contact-subject-error">{contactErrors.subject}</span>}
                 <label htmlFor="whatsapp-message">Message</label>
                 <textarea
                   id="whatsapp-message"
@@ -650,14 +757,17 @@ function App() {
                   rows="5"
                   placeholder="Write your message..."
                   required
+                  aria-invalid={Boolean(contactErrors.message)}
+                  aria-describedby={contactErrors.message ? 'whatsapp-message-error' : undefined}
                   value={contactForm.message}
-                  onChange={(event) => setContactForm({ ...contactForm, message: event.target.value })}
+                  onChange={(event) => updateContactField('message', event.target.value)}
                 />
+                {contactErrors.message && <span className="field-error" id="whatsapp-message-error">{contactErrors.message}</span>}
                 <button className="button button-primary message-submit" type="submit">
                   Continue in WhatsApp
                 </button>
                 <span className="contact-form-note" id="contact-form-note">
-                  Opens WhatsApp with the details filled in. Review and send the message there.
+                  Opens WhatsApp with the details filled in. Review and send your message there.
                 </span>
               </form>
             </div>
@@ -669,7 +779,7 @@ function App() {
         <div className="footer-main section-shell">
           <div className="footer-brand">
             <a className="wordmark" href="#home">{profile.name}</a>
-            <p>Aspiring Software Engineer specializing in Java and Full-Stack Development</p>
+            <p>{profile.headline}</p>
           </div>
           <nav className="footer-nav" aria-label="Footer navigation">
             {navigation.map((item) => (

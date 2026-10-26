@@ -676,6 +676,18 @@ body .hero-role span {
   color: #56ada5;
 }
 
+body[data-theme="dark"] .hero h1 span {
+  color: #74cbbd;
+}
+
+body[data-theme="dark"] .hero-role {
+  color: #bdccc8;
+}
+
+body[data-theme="dark"] .hero-role span {
+  color: #74cbbd;
+}
+
 body .hero-description {
   max-width: 570px;
   margin-top: 10px;
@@ -916,7 +928,6 @@ body textarea:focus-visible {
 
   body .hero-portrait {
     width: min(100%, 460px);
-    min-height: 490px;
     justify-self: center;
   }
 

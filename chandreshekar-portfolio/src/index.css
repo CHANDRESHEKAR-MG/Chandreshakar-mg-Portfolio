@@ -19,7 +19,7 @@
 html {
   min-width: 320px;
   scroll-behavior: smooth;
-  scroll-padding-top: 82px;
+  scroll-padding-top: 0;
 }
 
 body {
