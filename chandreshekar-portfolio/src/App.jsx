@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import {
   codingProfiles,
   education,
@@ -30,8 +30,14 @@ const skillMarks = {
   Maven: 'Mv',
   'Data Structures & Algorithms': 'DSA',
   'Machine Learning': 'ML',
+  'Deep Learning': 'DL',
+  'Generative AI': 'AI',
+  LLMs: 'LLM',
+  'Retrieval-Augmented Generation (RAG)': 'RAG',
+  'Model Fine-tuning': 'FT',
   Docker: 'D',
   Kubernetes: 'K8',
+  'CI/CD': 'CI',
   AWS: 'AWS',
 }
 
@@ -52,6 +58,23 @@ function Icon({ name, size = 18 }) {
     return (
       <svg {...common} fill="currentColor" stroke="none">
         <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.56.1.76-.24.76-.54v-2.1c-3.1.68-3.76-1.32-3.76-1.32-.51-1.3-1.24-1.65-1.24-1.65-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 .1.78 1.03 2.96.78.1-.72.4-1.21.72-1.49-2.48-.28-5.08-1.24-5.08-5.53 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.15a10.6 10.6 0 0 1 5.55 0c2.11-1.45 3.05-1.15 3.05-1.15.61 1.54.23 2.68.11 2.96.72.78 1.15 1.78 1.15 3 0 4.3-2.6 5.25-5.09 5.53.4.34.76 1 .76 2.02v3.29c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z" />
+      </svg>
+    )
+  }
+
+  if (name === 'moon') {
+    return (
+      <svg {...common}>
+        <path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5a8.5 8.5 0 1 0 12 12Z" />
+      </svg>
+    )
+  }
+
+  if (name === 'sun') {
+    return (
+      <svg {...common}>
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
       </svg>
     )
   }
@@ -139,14 +162,43 @@ function ExternalLink({ href, children, className = '', label }) {
   )
 }
 
+function getInitialTheme() {
+  try {
+    const savedTheme = window.localStorage.getItem('portfolio-theme')
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      return savedTheme
+    }
+  } catch (error) {
+    console.error('Unable to read the saved portfolio theme.', error)
+  }
+
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [theme, setTheme] = useState(getInitialTheme)
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
     subject: '',
     message: '',
   })
+
+  useLayoutEffect(() => {
+    document.body.dataset.theme = theme
+    document.documentElement.style.colorScheme = theme
+    document.querySelector('meta[name="theme-color"]')?.setAttribute(
+      'content',
+      theme === 'dark' ? '#0c1011' : '#fcfdfd',
+    )
+
+    try {
+      window.localStorage.setItem('portfolio-theme', theme)
+    } catch (error) {
+      console.error('Unable to save the portfolio theme preference.', error)
+    }
+  }, [theme])
 
   useEffect(() => {
     const targets = document.querySelectorAll('[data-reveal]')
@@ -183,6 +235,18 @@ function App() {
             {profile.name}
           </a>
           <button
+            className="theme-toggle"
+            type="button"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            aria-pressed={theme === 'dark'}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            onClick={() => setTheme((currentTheme) => (
+              currentTheme === 'dark' ? 'light' : 'dark'
+            ))}
+          >
+            <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={19} />
+          </button>
+          <button
             className="menu-toggle"
             type="button"
             aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -212,28 +276,23 @@ function App() {
           <div className="hero-copy" data-reveal>
             <p className="availability">
               <span className="availability-dot" />
-              Interested in software engineering opportunities
+              Actively seeking SDE Intern / Software Engineer roles
             </p>
-            <p className="hero-intro">Hello, I&apos;m</p>
-            <h1 id="hero-title">{profile.name}</h1>
-            <p className="hero-role">{profile.headline}</p>
-            <p className="hero-headline">
-              Building Practical Software.
-              <br />
-              <span>Solving Meaningful Problems.</span>
+            <h1 id="hero-title">Hi, I&apos;m <span>Chandreshekar MG</span></h1>
+            <p className="hero-role">
+              Aspiring Software Engineer <span aria-hidden="true">|</span> Java
+              <span aria-hidden="true">|</span> Spring Boot
+              <span aria-hidden="true">|</span> MERN Stack
+              <span aria-hidden="true">|</span> DevOps
             </p>
             <p className="hero-description">
-              {profile.introduction}
-            </p>
-            <p className="hero-learning">
-              <strong>Currently learning:</strong> {learningInterests.join(' · ')}
+              I enjoy building practical, scalable software applications that
+              solve real problems. I&apos;m growing my skills across full-stack
+              development, AI engineering, and cloud-native tools.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#projects">
-                View projects <Icon name="arrow-right" size={16} />
-              </a>
-              <a className="button button-secondary" href={profile.resumePdf} download>
-                <Icon name="download" size={16} /> Download resume
+                Explore My Projects <Icon name="arrow-right" size={16} />
               </a>
             </div>
             <div className="hero-socials" aria-label="Social profiles">
@@ -254,20 +313,14 @@ function App() {
               <span>{profile.location}</span>
             </div>
           </div>
-          <aside className="hero-aside" aria-label="Profile summary" data-reveal>
-            <div className="hero-aside-top">
-              <span className="hero-monogram">C<span>.</span></span>
-              <span className="hero-aside-status"><i /> CSE UNDERGRADUATE</span>
+          <aside className="hero-portrait" aria-label="Portrait of Chandreshekar M. G." data-reveal>
+            <div className="profile-photo-frame">
+              <img
+                className="profile-photo"
+                src="/images/profile.jpeg"
+                alt="Portrait of Chandreshekar M. G."
+              />
             </div>
-            <p className="hero-aside-title">Engineering mindset.<br />Software in focus.</p>
-            <p className="hero-aside-copy">
-              From mechanical engineering foundations to building skills in
-              Java and full-stack development.
-            </p>
-            <div className="hero-aside-rule" />
-            <a href="#about" className="text-link">
-              Get to know me <Icon name="arrow-right" size={15} />
-            </a>
           </aside>
         </section>
 
@@ -287,15 +340,15 @@ function App() {
               </p>
               <p>
                 That transition has shaped my curiosity about how systems work,
-                from physical mechanisms to software. I&apos;m developing my
-                programming and full-stack skills through coursework and
-                projects, with a focus on sound fundamentals and practical
-                problem-solving.
+                from physical mechanisms to software. I&apos;m building software
+                engineering fundamentals through Java and full-stack projects,
+                while exploring machine learning, Generative AI, DevOps, and
+                cloud technologies.
               </p>
               <p>
-                My goal is to secure a software engineering internship or
-                full-time opportunity at a product-based or growth-stage
-                technology company.
+                My goal is to grow as a software development engineer,
+                contributing to full-stack products while building deeper
+                capability in AI engineering and cloud-native delivery.
               </p>
             </div>
             <aside className="about-aside" data-reveal>
@@ -509,7 +562,7 @@ function App() {
               <p>
                 Send a message or find me on my professional and coding profiles.
               </p>
-              <div className="contact-details">
+              <address className="contact-details" aria-label="Contact details">
                 <a className="contact-detail" href={`mailto:${profile.email}`}>
                   <span className="contact-detail-icon">✉</span>
                   <div>
@@ -541,7 +594,7 @@ function App() {
                   </div>
                   <Icon name="arrow" size={15} />
                 </ExternalLink>
-              </div>
+              </address>
             </div>
             <div className="contact-side">
               <form
@@ -565,6 +618,7 @@ function App() {
                   id="contact-name"
                   name="name"
                   autoComplete="name"
+                  placeholder="Your name"
                   required
                   value={contactForm.name}
                   onChange={(event) => setContactForm({ ...contactForm, name: event.target.value })}
@@ -575,6 +629,7 @@ function App() {
                   name="email"
                   type="email"
                   autoComplete="email"
+                  placeholder="you@example.com"
                   required
                   value={contactForm.email}
                   onChange={(event) => setContactForm({ ...contactForm, email: event.target.value })}
@@ -583,6 +638,7 @@ function App() {
                 <input
                   id="contact-subject"
                   name="subject"
+                  placeholder="What would you like to discuss?"
                   required
                   value={contactForm.subject}
                   onChange={(event) => setContactForm({ ...contactForm, subject: event.target.value })}
@@ -592,6 +648,7 @@ function App() {
                   id="whatsapp-message"
                   name="message"
                   rows="5"
+                  placeholder="Write your message..."
                   required
                   value={contactForm.message}
                   onChange={(event) => setContactForm({ ...contactForm, message: event.target.value })}

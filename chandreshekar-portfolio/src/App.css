@@ -1398,10 +1398,9 @@
   }
 }
 
-body {
+body[data-theme="dark"] {
   background: #0c1011;
   color: #e6ecea;
-}
 
 .site-header {
   border-color: #222c2d;
@@ -1448,10 +1447,18 @@ body {
   color: #e9efed;
 }
 
-.hero-role,
+.hero h1 span,
 .hero-headline span,
 .section-heading h2 span,
 .contact-copy h2 span {
+  color: #74cbbd;
+}
+
+.hero-role {
+  color: #bdccc8;
+}
+
+.hero-role span {
   color: #74cbbd;
 }
 
@@ -1805,20 +1812,25 @@ body {
   color: #e5f1ed;
 }
 
+.profile-photo-frame::after {
+  background: linear-gradient(180deg, transparent, #0c1011 94%);
+}
+}
+
 @media (max-width: 760px) {
-  .primary-navigation {
+  body[data-theme="dark"] .primary-navigation {
     border-color: #293536;
     background: #111718;
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
   }
 
-  .primary-navigation > a,
-  .primary-navigation > a:not(.nav-resume) {
+  body[data-theme="dark"] .primary-navigation > a,
+  body[data-theme="dark"] .primary-navigation > a:not(.nav-resume) {
     border-color: #293536;
     color: #d0dad7;
   }
 
-  .primary-navigation > a:hover {
+  body[data-theme="dark"] .primary-navigation > a:hover {
     color: #82d7c7;
   }
 }

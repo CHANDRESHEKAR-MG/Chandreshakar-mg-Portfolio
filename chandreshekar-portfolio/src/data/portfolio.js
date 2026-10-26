@@ -2,10 +2,10 @@ import resumePdf from '../../ChandreshekarM-g-resume (1).pdf'
 
 export const profile = {
   name: 'Chandreshekar M. G.',
-  title: 'Aspiring Software Engineer',
-  headline: 'Aspiring Software Engineer | Java & Full-Stack Development',
+  title: 'Aspiring Software Development Engineer (SDE)',
+  headline: 'Aspiring Software Developer (SDE) | Full-Stack Developer | AI Engineering',
   introduction:
-    'Computer Science engineering student learning to turn ideas into practical software through Java, web development, and thoughtful problem-solving.',
+    'Computer Science engineering student building software development foundations through full-stack projects while exploring AI engineering, Generative AI, DevOps, and AWS cloud.',
   location: 'Mandya, Karnataka, India',
   email: 'chandangowdachandu550@gmail.com',
   resumePdf,
@@ -35,6 +35,7 @@ export const skillGroups = [
       { name: 'C' },
       { name: 'JavaScript' },
       { name: 'SQL' },
+      { name: 'Data Structures & Algorithms', learning: true },
     ],
   },
   {
@@ -67,13 +68,24 @@ export const skillGroups = [
     ],
   },
   {
-    name: 'Additional learning',
+    name: 'AI Engineering & GenAI',
     number: '06',
     skills: [
-      { name: 'Data Structures & Algorithms', learning: true },
       { name: 'Machine Learning', learning: true },
+      { name: 'Deep Learning', learning: true },
+      { name: 'Generative AI', learning: true },
+      { name: 'LLMs', learning: true },
+      { name: 'Retrieval-Augmented Generation (RAG)', learning: true },
+      { name: 'Model Fine-tuning', learning: true },
+    ],
+  },
+  {
+    name: 'DevOps & Cloud',
+    number: '07',
+    skills: [
       { name: 'Docker', learning: true },
       { name: 'Kubernetes', learning: true },
+      { name: 'CI/CD', learning: true },
       { name: 'AWS', learning: true },
     ],
   },
@@ -125,11 +137,11 @@ export const projects = [
 ]
 
 export const learningInterests = [
+  'SDE & Full-Stack Development',
+  'AI & Generative AI Engineering',
+  'DevOps & AWS Cloud',
   'Java & Spring Boot',
   'Data Structures & Algorithms',
-  'Full-Stack Development',
-  'Machine Learning & AI',
-  'Cloud Computing & DevOps',
 ]
 
 export const education = [

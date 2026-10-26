@@ -2,6 +2,8 @@
 
 A responsive recruiter-focused portfolio built with React, Vite, and CSS. All personal, education, skill, project, and profile data are kept in `src/data/portfolio.js`. The site does not use external APIs or a backend.
 
+The portfolio supports light and dark themes, follows the system preference on first visit, and saves your selection in the browser.
+
 ## Run locally
 
 ```bash
