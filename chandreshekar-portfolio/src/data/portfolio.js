@@ -1,4 +1,4 @@
-import resumePdf from '../../ChandreshekarM-g-resume (1).pdf'
+import resumePdf from '../../ChandreshekarMGresume (1).pdf'
 
 export const profile = {
   name: 'Chandreshekar M. G.',
